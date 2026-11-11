@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta name="theme-color" content="#111019">
+
+<title>K-POP 2026 RELEASE ARCHIVE</title>
+
+<style>
+
+:root{
+
+--bg:#0e0d13;--panel:#191720;--line:#302d39;
+
+--text:#f7f3fa;--muted:#aaa4b5;--pink:#ff85ba;
+
+--purple:#b5a0ff;--green:#92e0c2
+
+}
+
+*{box-sizing:border-box}
+
+body{
+
+margin:0;background:radial-gradient(ellipse at 10% 0%,#342541,transparent 40%),var(--bg);
+
+color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+
+}
+
+header{padding:38px 6vw 28px;border-bottom:1px solid var(--line)}
+
+.eyebrow{font-size:10px;letter-spacing:4px;color:var(--pink);font-weight:800}
+
+h1{font-size:clamp(38px,8vw,76px);line-height:.95;letter-spacing:-4px;margin:18px 0}
+
+.desc{color:#c3bdcb;font-size:13px;line-height:1.8;max-width:650px}
+
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+
+.tag{font-size:10px;border:1px solid #51445c;border-radius:30px;padding:7px 11px;color:#e0d5eb}
+
+main{max-width:1400px;margin:auto;padding:20px 5vw 60px}
+
+.toolbar{position:sticky;top:0;z-index:5;background:#111019ed;backdrop-filter:blur(16px);padding:12px 0;display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
+
+input,select{min-width:0;background:#211e29;border:1px solid #413b4a;border-radius:11px;padding:12px;color:white;font-size:13px}
+
+.months{display:flex;gap:7px;overflow-x:auto;padding:16px 0;scrollbar-width:none}
+
+.months button{flex-shrink:0;border:1px solid var(--line);border-radius:30px;background:#1c1922;color:#c8c1d0;padding:9px 13px;font-size:11px}
+
+.months button.active{background:var(--pink);color:#21121c;border-color:var(--pink);font-weight:bold}
+
+.summary{font-size:12px;color:var(--muted);margin:8px 0 22px}
+
+.section{display:flex;align-items:baseline;gap:12px;margin:30px 0 14px}
+
+.section h2{font-size:24px;margin:0;letter-spacing:-1px}
+
+.section span{font-size:10px;color:var(--muted);letter-spacing:2px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+
+.card{background:linear-gradient(145deg,#211e29,#15131b);border:1px solid var(--line);border-radius:17px;overflow:hidden}
+
+.top{display:grid;grid-template-columns:112px 1fr;gap:14px;padding:15px}
+
+.cover{width:112px;aspect-ratio:1;border-radius:11px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;background:linear-gradient(135deg,var(--c1),var(--c2));text-decoration:none;color:white}
+
+.cover img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+
+.cover strong{font-size:13px;z-index:1;text-shadow:0 2px 7px #000;line-height:1.3}
+
+.cover small{position:absolute;bottom:7px;font-size:8px;letter-spacing:2px;z-index:1;text-shadow:0 2px 5px #000}
+
+.artist{font-size:11px;color:var(--pink);font-weight:800}
+
+.album{font-size:18px;font-weight:850;line-height:1.2;margin:6px 0}
+
+.date{font-size:11px;color:#c4bdce}
+
+.type{display:inline-block;margin-top:8px;background:#ffffff10;border:1px solid #ffffff20;padding:4px 7px;border-radius:5px;font-size:10px;color:#ded5e9}
+
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+
+.btn{font-size:10px;text-decoration:none;color:white;border:1px solid #514958;padding:7px 9px;border-radius:7px}
+
+.btn.primary{background:var(--pink);color:#21121c;border-color:var(--pink);font-weight:bold}
+
+.info{border-top:1px solid #302d39;padding:12px 15px}
+
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+
+.badge{font-size:9px;background:#302a38;color:#ded4e8;padding:5px 7px;border-radius:5px}
+
+.badge.pre{background:#49253b;color:#ffacd2}
+
+.badge.title{background:#1b3c32;color:#a5f0d3}
+
+.trackhead{font-size:9px;letter-spacing:2px;color:#aaa4b5}
+
+.tracks{list-style:none;margin:7px 0 0;padding:0}
+
+.tracks li{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #ffffff0b;padding:7px 0;font-size:11px}
+
+.tracks a{color:#eee8f3;text-decoration:none}
+
+.tracks a:hover{color:var(--pink)}
+
+.mark{font-size:9px;color:var(--green);white-space:nowrap}
+
+.mark.pre{color:#ff9ecb}
+
+.note{font-size:10px;color:var(--muted);line-height:1.6;margin-top:9px}
+
+.empty{text-align:center;padding:50px;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding:25px 0;color:var(--muted);font-size:10px;line-height:1.8;margin-top:40px}
+
+footer a{color:#c9b5ff}
+
+@media(max-width:600px){
+
+.toolbar{grid-template-columns:1fr 1fr}
+
+.toolbar input{grid-column:1/-1}
+
+.top{grid-template-columns:96px 1fr}
+
+.cover{width:96px}
+
+.album{font-size:16px}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="eyebrow">THE YEAR IN K-POP · 2026</div>
+
+<h1>RELEASE<br>ARCHIVE<span style="color:var(--pink)">.</span></h1>
+
+<div class="desc">
+
+2026 K-POP 音乐发行档案。按月份记录团体、SOLO、专辑、EP 与单曲。
+
+搜索你喜欢的艺人，查看专辑封面、发行日期、曲目及 Spotify 音源。
+
+</div>
+
+<div class="tags">
+
+<span class="tag">2026 RELEASES</span>
+
+<span class="tag">GROUP + SOLO</span>
+
+<span class="tag">SPOTIFY LINKS</span>
+
+<span class="tag">ALBUM ARCHIVE</span>
+
+</div>
+
+</header>
+
+<main>
+
+<div class="toolbar">
+
+<input id="search" placeholder="搜索艺人 / 专辑 / 歌曲…">
+
+<select id="kind">
+
+<option value="all">全部艺人</option>
+
+<option value="团体">团体</option>
+
+<option value="个人">个人 / 小分队</option>
+
+</select>
+
+<select id="status">
+
+<option value="all">全部状态</option>
+
+<option value="released">已发行</option>
+
+<option value="upcoming">待发行</option>
+
+</select>
+
+</div>
+
+<div class="months" id="months"></div>
+
+<div class="summary" id="summary"></div>
+
+<div id="results"></div>
+
+<footer>
+
+<b>资料说明</b><br>
+
+这是持续更新的精选档案，不代表已经覆盖所有 K-POP 发行。部分曲目表或未来发行信息尚未核实的项目会明确标注，不以猜测补全。发行日期以韩国当地日期为准。MV / 回归日期与专辑发行日期分开记录。封面通过 Apple Music/iTunes 搜索匹配，未匹配时可使用封面搜索入口。<br>
+
+资料核对入口：
+
+<a href="https://kpopping.com/categories/albums/2026" target="_blank">kpopping</a> ·
+
+<a href="https://kpopgo.com/comebacks" target="_blank">Kpopgo</a> ·
+
+<a href="https://open.spotify.com/" target="_blank">Spotify</a>
+
+</footer>
+
+</main>
+
+<script>
+
+const albums=[
+
+{d:"2026-01-05",a:"Apink",k:"团体",t:"RE : LOVE",type:"迷你专辑",tracks:[["Love Me More","title"]],c:["#d5a5bd","#754d79"],cb:"1月回归",s:"released"},
+
+{d:"2026-01-07",a:"CHUU",k:"个人",t:"XO, My Cyberlove",type:"正规专辑",tracks:[],c:["#f6b5c7","#8b5eae"],cb:"1月回归",s:"released"},
+
+{d:"2026-01-07",a:"CNBLUE",k:"团体",t:"3LOGY",type:"正规专辑",tracks:[],c:["#8a9db2","#26364c"],cb:"1月回归",s:"released"},
+
+{d:"2026-01-12",a:"DK x SEUNGKWAN",k:"个人",t:"소야곡",type:"合作单曲",tracks:[],c:["#d6c4a2","#645a72"],cb:"1月发行",s:"released"},
+
+{d:"2026-01-13",a:"ALPHA DRIVE ONE",k:"团体",t:"EUPHORIA",type:"出道迷你专辑",tracks:[],c:["#9baed1","#404b72"],cb:"出道回归",s:"released"},
+
+{d:"2026-01-13",a:"LNGSHOT",k:"团体",t:"SHOT CALLERS",type:"出道迷你专辑",tracks:[],c:["#e5a66d","#613f35"],cb:"出道回归",s:"released"},
+
+{d:"2026-01-16",a:"ENHYPEN",k:"团体",t:"THE SIN : VANISH",type:"迷你专辑",tracks:[["事件的开端",""],["No Way Back",""],["逃亡者们",""],["Knife","title"],["Stealer",""],["我们寻找的声音",""],["目击者",""],["Big Girls Don't Cry",""],["Lost Island",""],["Sleep Tight",""]],c:["#b8b6c5","#292638"],cb:"1月16日 · Knife MV",s:"released"},
+
+{d:"2026-01-19",a:"EXO",k:"团体",t:"REVERXE",type:"正规专辑",tracks:[["Crown","title"]],c:["#b4c4d2","#303b50"],cb:"1月19日 · Crown MV",s:"released"},
+
+{d:"2026-01-28",a:"KiiiKiii",k:"团体",t:"Delulu Pack",type:"迷你专辑",tracks:[],c:["#f3a5bd","#794f88"],cb:"1月回归",s:"released"},
+
+{d:"2026-02-27",a:"BLACKPINK",k:"团体",t:"DEADLINE",type:"迷你专辑",tracks:[["JUMP","pre"],["GO","title"],["Me and My",""],["Champion",""],["Fxxxboy",""]],c:["#e5a6ae","#4d203c"],cb:"先行曲 JUMP · 主打 GO",s:"released"},
+
+{d:"2026-03-20",a:"BTS",k:"团体",t:"ARIRANG",type:"正规专辑",tracks:[["Body to Body",""],["Hooligan",""],["Aliens",""],["FYA",""],["2.0",""],["No. 29",""],["SWIM","title"],["Merry Go Round",""],["NORMAL",""],["Like Animals",""],["they don't know 'bout us",""],["One More Night",""],["Please",""],["Into the Sun",""]],c:["#c5a878","#493e2f"],cb:"3月20日 · SWIM MV",s:"released"},
+
+{d:"2026-04-13",a:"TOMORROW X TOGETHER",k:"团体",t:"7TH YEAR: A Moment of Stillness in the Thorns",type:"迷你专辑",tracks:[["Stick With You","title"]],c:["#b9b3d2","#4a435f"],cb:"4月13日回归",s:"released"},
+
+{d:"2026-05-04",a:"BABYMONSTER",k:"团体",t:"CHOOM",type:"迷你专辑",tracks:[["CHOOM","title"]],c:["#d2a3a0","#533d4e"],cb:"5月4日回归",s:"released"},
+
+{d:"2026-05-22",a:"LE SSERAFIM",k:"团体",t:"PUREFLOW pt.1",type:"正规专辑",tracks:[["CELEBRATION","pre"],["BOOMPALA","title"]],c:["#c4a7d7","#4c3d69"],cb:"先行曲 CELEBRATION · 主打 BOOMPALA",s:"released"},
+
+{d:"2026-06-26",a:"ATEEZ",k:"团体",t:"GOLDEN HOUR : Part.5",type:"迷你专辑",tracks:[["BAD","title"]],c:["#d2a35e","#533d2d"],cb:"6月26日回归",s:"released"},
+
+{d:"2026-08-07",a:"Stray Kids",k:"团体",t:"THIS & THAT",type:"单曲",tracks:[],c:["#c2a18c","#3c2d30"],cb:"8月发行",s:"released"},
+
+{d:"2026-08-07",a:"ARTMS",k:"团体",t:"Hyper-Ego",type:"专辑",tracks:[],c:["#b4a7d8","#41375e"],cb:"8月发行",s:"released"},
+
+{d:"2026-08-14",a:"KATSEYE",k:"团体",t:"WILD",type:"EP",tracks:[],c:["#c5a4a2","#523b48"],cb:"8月发行",s:"released"},
+
+{d:"2026-08-21",a:"ENHYPEN",k:"团体",t:"THE SIN : BLISS",type:"迷你专辑",tracks:[["Bloody Paradise","title"]],c:["#a9b5c7","#333e57"],cb:"8月21日回归",s:"released"},
+
+{d:"2026-08-31",a:"TAEMIN",k:"个人",t:"PHASE I : Soft Violence",type:"迷你专辑",tracks:[],c:["#b2a0a0","#49353d"],cb:"8月回归",s:"released"},
+
+{d:"2026-09-04",a:"MONSTA X",k:"团体",t:"The Phase",type:"迷你专辑",tracks:[],c:["#b4a18d","#4a3b35"],cb:"9月回归",s:"released"},
+
+{d:"2026-09-07",a:"fromis_9",k:"团体",t:"Glow",type:"迷你专辑",tracks:[],c:["#d4a8c6","#5b4369"],cb:"9月回归",s:"released"},
+
+{d:"2026-09-08",a:"&TEAM",k:"团体",t:"Mark on Me",type:"韩语迷你专辑",tracks:[],c:["#9ab7b4","#344d54"],cb:"9月回归",s:"released"},
+
+{d:"2026-09-10",a:"IU",k:"个人",t:"Unknown Planet",type:"单曲",tracks:[["Unknown Planet","title"],["Dear My Crazy Soulmate","title"]],c:["#b9a7dc","#493f68"],cb:"双主打",s:"released"},
+
+{d:"2026-10-23",a:"LISA",k:"个人",t:"PRESS PLAY",type:"迷你专辑",tracks:[],c:["#d7a1a1","#52383c"],cb:"10月23日回归",s:"released"},
+
+{d:"2026-10-23",a:"BABYMONSTER",k:"团体",t:"DESERVE",type:"单曲",tracks:[],c:["#bba2a2","#443344"],cb:"10月发行",s:"released"},
+
+{d:"2026-10-23",a:"MINNIE",k:"个人",t:"i love you to the moon and back",type:"迷你专辑",tracks:[],c:["#b5a4d3","#453e69"],cb:"10月回归",s:"released"},
+
+{d:"2026-10-26",a:"IVE",k:"团体",t:"Looks Can Kill",type:"迷你专辑",tracks:[],c:["#d6a3b6","#57384b"],cb:"10月26日回归",s:"released"},
+
+{d:"2026-10-26",a:"RIIZE",k:"团体",t:"Insomnia",type:"单曲",tracks:[],c:["#b5a9a0","#3f4149"],cb:"10月发行",s:"released"},
+
+{d:"2026-10-26",a:"ILLIT",k:"团体",t:"BREAK EVEN",type:"迷你专辑",tracks:[],c:["#c9b5d8","#56466e"],cb:"10月回归",s:"released"},
+
+{d:"2026-11-02",a:"TREASURE",k:"团体",t:"SHOCK",type:"单曲",tracks:[],c:["#b3a7d2","#43365e"],cb:"11月2日发行",s:"released"},
+
+{d:"2026-11-02",a:"TWS",k:"团体",t:"TO US",type:"单曲",tracks:[],c:["#9fc4cf","#385566"],cb:"11月2日发行",s:"released"},
+
+{d:"2026-11-02",a:"xikers",k:"团体",t:"ROUTE ZERO : The CALLING",type:"迷你专辑",tracks:[],c:["#c3a27c","#523c32"],cb:"11月2日回归",s:"released"},
+
+{d:"2026-11-06",a:"P1Harmony",k:"团体",t:"BLOW UP",type:"迷你专辑",tracks:[],c:["#b1a3a5","#4c3842"],cb:"11月6日回归",s:"released"},
+
+{d:"2026-11-09",a:"NCT DREAM",k:"团体",t:"DREAM AFTER DREAM",type:"正规专辑",tracks:[],c:["#a5b4d4","#39435f"],cb:"11月9日回归",s:"released"},
+
+{d:"2026-11-09",a:"CHAERYEONG",k:"个人",t:"Lovesick",type:"迷你专辑",tracks:[],c:["#d8a4b9","#60405b"],cb:"11月9日 SOLO",s:"released"},
+
+{d:"2026-11-13",a:"ATEEZ",k:"团体",t:"GOLDEN HOUR : Part.6",type:"迷你专辑",tracks:[],c:["#d0a66d","#573c2b"],cb:"已官宣 · 11月13日",s:"upcoming"},
+
+{d:"2026-11-16",a:"TOMORROW X TOGETHER",k:"团体",t:"PERFECT STORM",type:"迷你专辑",tracks:[],c:["#b8a8d0","#433d5b"],cb:"已官宣 · 11月16日",s:"upcoming"},
+
+{d:"2026-11-20",a:"ENHYPEN",k:"团体",t:"The Sin : Parallel World",type:"单曲",tracks:[],c:["#aeb4c6","#343b52"],cb:"已官宣 · 11月20日",s:"upcoming"},
+
+{d:"2026-11-20",a:"YVES",k:"个人",t:"Cute & Anxiety",type:"迷你专辑",tracks:[],c:["#d7a4b7","#583c56"],cb:"已官宣 · 11月20日",s:"upcoming"},
+
+{d:"2026-11-25",a:"Stray Kids",k:"团体",t:"SUIATSU",type:"迷你专辑",tracks:[],c:["#c2a28d","#49332f"],cb:"已官宣 · 11月25日",s:"upcoming"},
+
+{d:"2026-12-04",a:"MARK",k:"个人",t:"Windmill",type:"正规专辑",tracks:[],c:["#a9bac8","#3b4c59"],cb:"已官宣 · 12月4日",s:"upcoming"},
+
+{d:"2026-12-09",a:"NMIXX",k:"团体",t:"N=MIXX",type:"专辑",tracks:[],c:["#b5a8d1","#403d5d"],cb:"已官宣 · 12月9日",s:"upcoming"}
+
+];
+
+const months=["全部","JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+let month=0;
+
+const $=id=>document.getElementById(id);
+
+function spotify(a,t){return "https://open.spotify.com/search/"+encodeURIComponent(a+" "+t)}
+
+function coverSearch(a,t){return "https://www.google.com/search?tbm=isch&q="+encodeURIComponent(a+" "+t+" album cover")}
+
+function makeMonths(){
+
+$("months").innerHTML=months.map((m,i)=>`<button class="${i===month?'active':''}" data-m="${i}">${m}</button>`).join("");
+
+document.querySelectorAll(".months button").forEach(b=>b.onclick=()=>{month=+b.dataset.m;makeMonths();render()});
+
+}
+
+function card(x){
+
+let trackHTML=x.tracks.length?x.tracks.map(([t,f])=>`<li><a target="_blank" href="${spotify(x.a,t)}">${t}</a><span class="mark ${f}">${f==="pre"?"PRE-RELEASE":f==="title"?"TITLE TRACK":""}</span></li>`).join(""):'<li style="color:#aaa">完整曲目表待核实 / 补充</li>';
+
+return `<article class="card">
+
+<div class="top">
+
+<a class="cover" href="${coverSearch(x.a,x.t)}" target="_blank" style="--c1:${x.c[0]};--c2:${x.c[1]}" data-cover="${x.a}|${x.t}">
+
+<strong>${x.t}</strong><small>${x.a.toUpperCase()}</small>
+
+</a>
+
+<div>
+
+<div class="artist">${x.a}</div><div class="album">${x.t}</div>
+
+<div class="date">${x.d} · KST</div><span class="type">${x.type}</span>
+
+<div class="actions">
+
+<a class="btn primary" target="_blank" href="${spotify(x.a,x.t)}">Spotify</a>
+
+<a class="btn" target="_blank" href="${coverSearch(x.a,x.t)}">封面 / 保存</a>
+
+</div>
+
+</div></div>
+
+<div class="info">
+
+<div class="meta">
+
+<span class="badge">${x.s==="upcoming"?"UPCOMING":"RELEASED"}</span>
+
+<span class="badge">${x.k}</span>
+
+<span class="badge">回归 / MV：${x.cb}</span>
+
+</div>
+
+<div class="trackhead">TRACKLIST · 点击歌曲跳转 Spotify</div>
+
+<ul class="tracks">${trackHTML}</ul>
+
+</div></article>`;
+
+}
+
+function render(){
+
+let q=$("search").value.toLowerCase().trim(),k=$("kind").value,s=$("status").value;
+
+let list=albums.filter(x=>(!q||(x.a+" "+x.t+" "+x.tracks.map(t=>t[0]).join(" ")).toLowerCase().includes(q))&&(k==="all"||x.k===k)&&(s==="all"||x.s===s)&&(month===0||+x.d.slice(5,7)===month));
+
+list.sort((a,b)=>b.d.localeCompare(a.d));
+
+$("summary").textContent=`显示 ${list.length} 条记录 · 已发行 ${list.filter(x=>x.s==="released").length} 条 · 待发行 ${list.filter(x=>x.s==="upcoming").length} 条`;
+
+if(!list.length){$("results").innerHTML='<div class="empty">没有找到相关发行记录。</div>';return}
+
+let groups={};list.forEach(x=>{let m=x.d.slice(0,7);(groups[m]??=[]).push(x)});
+
+$("results").innerHTML=Object.entries(groups).map(([m,items])=>`<section><div class="section"><h2>${months[+m.slice(5,7)]}</h2><span>${m} · ${items.length} RELEASES</span></div><div class="grid">${items.map(card).join("")}</div></section>`).join("");
+
+loadCovers();
+
+}
+
+let coverCache={};
+
+async function loadCovers(){
+
+for(const el of document.querySelectorAll(".cover[data-cover]:not([data-done])")){
+
+el.dataset.done="1";
+
+let [a,t]=el.dataset.cover.split("|");
+
+if(coverCache[a+"|"+t]){putCover(el,coverCache[a+"|"+t]);continue}
+
+try{
+
+let r=await fetch("https://itunes.apple.com/search?term="+encodeURIComponent(a+" "+t)+"&entity=album&limit=8&country=kr");
+
+let data=await r.json();
+
+let result=(data.results||[])[0];
+
+if(result&&result.artworkUrl100){
+
+let url=result.artworkUrl100.replace("100x100bb","1000x1000bb");
+
+coverCache[a+"|"+t]=url;putCover(el,url);
+
+}
+
+}catch(e){}
+
+}
+
+}
+
+function putCover(el,url){
+
+el.innerHTML=`<img loading="lazy" src="${url}" alt="Album cover"><small>OPEN / SAVE</small>`;
+
+el.href=url;el.title="打开高清封面，长按保存";
+
+}
+
+["search","kind","status"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+
+makeMonths();render();
+
+</script>
+
+</body>
+
+</html>
